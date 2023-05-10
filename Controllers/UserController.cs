@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AuthenticationService.Repositories;
 
 namespace AuthenticationService.Controllers
 {
@@ -15,12 +16,14 @@ namespace AuthenticationService.Controllers
     {
         private IMapper _mapper;
         private ILogger _logger;
-        public UserController(ILogger logger, IMapper mapper)
+        private IUserRepository _userRepository;
+        public UserController(ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
             _logger.WriteEvent("Сообщение о событии в программе");
             _logger.WriteError("Сообщение об ошибке в программе");
             _mapper = mapper;
+            _userRepository = userRepository;
             
             
         }

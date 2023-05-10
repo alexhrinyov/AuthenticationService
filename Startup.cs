@@ -1,3 +1,4 @@
+using AuthenticationService.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +36,7 @@ namespace AuthenticationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ILogger, Logger>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             var mapperConfig = new MapperConfiguration((v) =>
             {
                 v.AddProfile(new MappingProfile());
