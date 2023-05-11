@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+﻿using AuthenticationService.Models;
+using AutoMapper;
 namespace AuthenticationService
-    
+
 {
     public class MappingProfile: Profile
     {

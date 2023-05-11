@@ -50,6 +50,18 @@ namespace AuthenticationService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationService", Version = "v1" });
             });
 
+            services.AddAuthentication(options => options.DefaultScheme = "Cookies").AddCookie("Cookies", options =>
+            {
+                options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = redirectContext =>
+                    {
+                        redirectContext.HttpContext.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
             LogDirectoryId = Guid.NewGuid();
             LogDirectoryName = LogDirectoryId.ToString();
             
@@ -81,6 +93,7 @@ namespace AuthenticationService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

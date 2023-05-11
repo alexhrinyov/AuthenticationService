@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AuthenticationService.Models;
 
 namespace AuthenticationService.Repositories
 {
