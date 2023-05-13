@@ -77,7 +77,7 @@ namespace AuthenticationService
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+            app.UseLogMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
