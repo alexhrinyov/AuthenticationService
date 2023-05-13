@@ -60,23 +60,7 @@ namespace AuthenticationService
                         return Task.CompletedTask;
                     }
                 };
-            });
-
-            LogDirectoryId = Guid.NewGuid();
-            LogDirectoryName = LogDirectoryId.ToString();
-            
-            //Создание файлов и папки при запуске приложения
-            if (!Directory.Exists(LogDirectoryName))
-            {
-                string workingDirectory = Directory.GetCurrentDirectory();
-                LogDirPath = Path.Combine(workingDirectory, "Logs", LogDirectoryName);
-                Directory.CreateDirectory(LogDirPath);
-                txtEventsPath = Path.Combine(LogDirPath, "events.txt");
-                txtErrorsPath = Path.Combine(LogDirPath, "errors.txt");
-                File.Create(txtEventsPath);
-                File.Create(txtErrorsPath);
-            }
-                
+            });    
 
         }
 
@@ -91,9 +75,9 @@ namespace AuthenticationService
             }
 
             app.UseRouting();
-
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,32 +1,54 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 namespace AuthenticationService
 {
     public class Logger:ILogger
     {
+
+        private ReaderWriterLockSlim lock_ = new ReaderWriterLockSlim();
+
+        private string logDirectory { get; set; }
+
+        public Logger()
+        {
+            logDirectory = AppDomain.CurrentDomain.BaseDirectory + @"/_logs/" + DateTime.Now.ToString("dd-MM-yy HH-mm-ss") + @"/";
+
+            if (!Directory.Exists(logDirectory))
+                Directory.CreateDirectory(logDirectory);
+        }
         public async void WriteEvent(string eventMessage)
         {
-            Console.WriteLine(eventMessage);
-            var sw = new StreamWriter(Startup.txtEventsPath, true);
-            
-            using (sw)
+            lock_.EnterWriteLock();
+            try
             {
-                await sw.WriteLineAsync(eventMessage);
+                using (StreamWriter writer = new StreamWriter(logDirectory + "events.txt", append: true))
+                {
+                    writer.WriteLine(eventMessage);
+                }
             }
-            sw.Close();
+            finally
+            {
+                lock_.ExitWriteLock();
+            }
         }
 
 
         public async void WriteError(string errorMessage)
         {
-            Console.WriteLine(errorMessage);
-            var sw = new StreamWriter(Startup.txtErrorsPath, true);
-            using (sw)
+            lock_.EnterWriteLock();
+            try
             {
-                await sw.WriteLineAsync(errorMessage);
+                using (StreamWriter writer = new StreamWriter("errors.txt", append: true))
+                {
+                    writer.WriteLine(errorMessage);
+                }
             }
-            sw.Close();
+            finally
+            {
+                lock_.ExitWriteLock();
+            }
         }
 
   

@@ -7,10 +7,13 @@ namespace AuthenticationService.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private List<User> users = new List<User>()
+        private readonly List<User> users;
+        public UserRepository()
         {
-            new User()
+            users = new List<User>()
             {
+                new User()
+                {
                 Id=Guid.NewGuid(),
                 FirstName="Максим",
                 LastName="Мальцев",
@@ -23,8 +26,8 @@ namespace AuthenticationService.Repositories
                     Name="Пользователь"
                 }
             },
-            new User()
-            {
+                new User()
+                {
                 Id=Guid.NewGuid(),
                 FirstName="Сергей",
                 LastName="Смирнов",
@@ -37,8 +40,8 @@ namespace AuthenticationService.Repositories
                     Name="Пользователь"
                 }
             },
-            new User()
-            {
+                new User()
+                {
                 Id=Guid.NewGuid(),
                 FirstName="Никита",
                 LastName="Литвенков",
@@ -52,6 +55,8 @@ namespace AuthenticationService.Repositories
                 }
             }
         };
+    }
+        
         public IEnumerable<User> GetAll()
         {
             return users;
