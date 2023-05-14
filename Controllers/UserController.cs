@@ -28,8 +28,6 @@ namespace AuthenticationService.Controllers
         public UserController(ILogger logger, IMapper mapper, IUserRepository userRepository)
         {
             _logger = logger;
-            _logger.WriteEvent("Сообщение о событии в программе");
-            _logger.WriteError("Сообщение об ошибке в программе");
             _mapper = mapper;
             _userRepository = userRepository;
             
